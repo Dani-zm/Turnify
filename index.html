@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Turnify: tu agenda de citas limpia y sencilla</title>
+  <meta name="description" content="Organiza tus citas, clientes y horarios en un solo lugar. Turnify es gratis para empezar. Únete a la beta.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 72'%3E%3Cpath d='M10 6h30l16 16v38a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V12a6 6 0 0 1 6-6z' fill='white' stroke='%231a1a1a' stroke-width='5'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Mascota de Turnify (la misma del asistente de la app) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="mascota" viewBox="0 0 64 72">
+      <path d="M10 6h30l16 16v38a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6V12a6 6 0 0 1 6-6z" fill="#fff" stroke="#1a1a1a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M40 6v10a6 6 0 0 0 6 6h10" fill="none" stroke="#1a1a1a" stroke-width="5" stroke-linejoin="round"/>
+      <path d="M15 34h9M36 34h9" stroke="#1a1a1a" stroke-width="4" stroke-linecap="round"/>
+      <path d="M23 44h18v6a9 9 0 0 1-18 0z" fill="#fff" stroke="#1a1a1a" stroke-width="4" stroke-linejoin="round"/>
+    </symbol>
+  </svg>
+
+  <header class="cabecera">
+    <div class="envoltura cabecera-interior">
+      <a class="logo" href="#inicio" aria-label="Turnify, ir al inicio">
+        <svg class="mascota mascota-mini" aria-hidden="true"><use href="#mascota"/></svg>
+        <span>Turnify</span>
+      </a>
+      <nav class="menu" aria-label="Secciones">
+        <a href="#problema">El problema</a>
+        <a href="#beneficios">Beneficios</a>
+        <a href="#demo">La app</a>
+        <a href="#precios">Precios</a>
+      </nav>
+      <a class="btn btn-negro btn-chico" href="#registro" data-evento="clic_cta" data-detalle="cabecera">Unirme a la beta</a>
+    </div>
+  </header>
+
+  <main id="inicio">
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="envoltura hero-grid">
+        <div class="hero-texto">
+          <h1>Organiza tus citas y pedidos sin complicaciones</h1>
+          <p class="hero-sub">Turnify es tu agenda de citas limpia y sencilla. Clientes, horarios y reservas en un solo lugar, y gratis para empezar.</p>
+          <div class="hero-acciones">
+            <a class="btn btn-negro" href="#registro" data-evento="clic_cta" data-detalle="hero">Quiero probar la beta</a>
+            <a class="btn" href="#demo">Ver cómo funciona</a>
+          </div>
+          <div class="guia hero-guia">
+            <svg class="mascota" aria-hidden="true"><use href="#mascota"/></svg>
+            <p class="burbuja">¡Hola! Te ayudaré a configurar tu agenda en pocos segundos</p>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <img src="img/06-paso4.png" width="434" height="906" alt="Pantalla de Turnify con una cita agendada para Juan Perez el 11 de octubre a las 17:00">
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEMA -->
+    <section class="seccion seccion-gris" id="problema">
+      <div class="envoltura">
+        <h2>Tus citas viven en demasiados lugares</h2>
+        <p class="intro">Un cuaderno, los chats de WhatsApp, tu memoria. Cuando crece la lista de clientes, algo se pierde.</p>
+
+        <div class="dos-col">
+          <div>
+            <h3>Hoy</h3>
+            <div class="caos">
+              <p class="nota">Lun 17:00 Juan<br>Mar ¿10 o 11?<br><span class="tachado">Jue 15:00 Ana</span> ¿vie?</p>
+              <p class="chat">¿Tienes hora para mañana?</p>
+              <p class="chat chat-b">Mejor a las 5, ¿se puede?</p>
+              <p class="sello">¡Doble reserva a las 17:00!</p>
+              <p class="chat">¿Me confirmas la cita?</p>
+              <p class="chat chat-b">Perdón, ¿era hoy o mañana?</p>
+            </div>
+            <p class="pie-visual">Cuaderno + chats + memoria = olvidos, horarios cruzados y tiempo perdido.</p>
+          </div>
+          <div>
+            <h3>Con Turnify</h3>
+            <div class="orden">
+              <p class="cita cita-activa"><span>Juan Perez</span><span>11 de octubre</span><span>17:00</span></p>
+              <p class="cita"><span>Ana Rojas</span><span>11 de octubre</span><span>18:30</span></p>
+              <p class="cita"><span>Luis Mamani</span><span>12 de octubre</span><span>09:00</span></p>
+              <p class="ejemplo">Datos de ejemplo</p>
+            </div>
+            <p class="pie-visual">Cliente, fecha y hora en un solo lugar. Cada cita aparece en el calendario.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BENEFICIOS -->
+    <section class="seccion" id="beneficios">
+      <div class="envoltura">
+        <h2>Hecho para que agendar sea lo fácil</h2>
+        <div class="tarjetas">
+          <article class="tarjeta">
+            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="6" width="36" height="36" rx="6"/><path d="M14 25l8 8 14-17"/></svg>
+            <h3>Simplicidad</h3>
+            <p>Un panel y un calendario para ver todas tus citas, sin abrir cinco apps distintas.</p>
+          </article>
+          <article class="tarjeta">
+            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18"/><path d="M24 12v13l9 6"/></svg>
+            <h3>Ahorro de tiempo</h3>
+            <p>Registra o cambia una reserva en pocos toques, en vez de buscar entre chats y notas.</p>
+          </article>
+          <article class="tarjeta">
+            <svg class="icono" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="9" width="36" height="33" rx="5"/><path d="M6 19h36M15 4v9M33 4v9"/><rect x="27" y="26" width="9" height="9" fill="#1a1a1a"/></svg>
+            <h3>Claridad</h3>
+            <p>El calendario te muestra qué horarios están libres y cuáles ocupados. Menos olvidos, menos cruces.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEMO -->
+    <section class="seccion seccion-gris" id="demo">
+      <div class="envoltura">
+        <h2>Mira cómo se registra una cita</h2>
+        <p class="intro">Este es el prototipo de la app. Toca cada pantalla para recorrer el flujo.</p>
+        <div class="demo-grid">
+          <div class="demo-telefono">
+            <img id="demo-img" src="img/01-carga.png" width="434" height="906" alt="">
+          </div>
+          <div class="demo-pasos" id="demo-pasos" aria-label="Pantallas del prototipo"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PRECIOS -->
+    <section class="seccion" id="precios">
+      <div class="envoltura">
+        <h2>Precios claros, desde $0</h2>
+        <p class="intro">La beta es gratuita y no se cobra nada ahora. Elegir un plan solo nos dice cuál te serviría.</p>
+        <div class="planes">
+          <article class="plan plan-gratis">
+            <h3>Turnify Gratis</h3>
+            <p class="precio">$0 <small>/ mes</small></p>
+            <p>Para emprendedores que comienzan.</p>
+            <ul>
+              <li>Registro básico de clientes</li>
+              <li>Gestión de citas</li>
+              <li>Calendario</li>
+            </ul>
+            <button class="btn btn-plan" type="button" data-plan="Plan Gratuito ($0)">Me interesa Gratis</button>
+          </article>
+          <article class="plan plan-pro">
+            <h3>Turnify Pro</h3>
+            <p class="precio">$3 <small>/ mes</small></p>
+            <p>Para negocios pequeños que necesitan mayor capacidad de gestión.</p>
+            <ul>
+              <li>Todo lo del plan Gratis</li>
+              <li>Más capacidad para tus clientes y citas</li>
+            </ul>
+            <button class="btn btn-plan" type="button" data-plan="Plan Pro ($3/mes)">Me interesa Pro</button>
+          </article>
+          <article class="plan plan-business">
+            <h3>Turnify Business</h3>
+            <p class="precio">$5 <small>/ mes</small></p>
+            <p>Para negocios con mayor volumen de citas y necesidades adicionales.</p>
+            <ul>
+              <li>Todo lo del plan Pro</li>
+              <li>Pensado para más volumen de reservas</li>
+            </ul>
+            <button class="btn btn-plan" type="button" data-plan="Plan Business ($5/mes)">Me interesa Business</button>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTRO BETA -->
+    <section class="seccion seccion-gris" id="registro">
+      <div class="envoltura registro-grid">
+        <div class="registro-texto">
+          <h2>Únete a la beta</h2>
+          <p class="intro">Cuéntanos de tu negocio y te damos acceso en cuanto esté lista.</p>
+          <div class="guia">
+            <svg class="mascota" aria-hidden="true"><use href="#mascota"/></svg>
+            <p class="burbuja">Solo te pedimos lo necesario. Tus datos son para contactarte sobre la beta.</p>
+          </div>
+        </div>
+
+        <div>
+          <form class="form" id="form-beta" novalidate>
+            <div class="campo">
+              <label for="nombre">Tu nombre</label>
+              <input id="nombre" name="nombre" type="text" maxlength="100" autocomplete="name" aria-describedby="error-nombre">
+              <p class="error" id="error-nombre" role="alert"></p>
+            </div>
+            <div class="campo">
+              <label for="correo">Correo electrónico</label>
+              <input id="correo" name="correo" type="email" maxlength="150" autocomplete="email" aria-describedby="error-correo">
+              <p class="error" id="error-correo" role="alert"></p>
+            </div>
+            <div class="campo">
+              <label for="tipo_negocio">Tipo de negocio o actividad</label>
+              <input id="tipo_negocio" name="tipo_negocio" type="text" maxlength="100" placeholder="Ej: taller mecánico, clases particulares" aria-describedby="error-tipo_negocio">
+              <p class="error" id="error-tipo_negocio" role="alert"></p>
+            </div>
+            <div class="campo">
+              <label for="necesidad_principal">¿Qué te cuesta más al organizar tus citas? (opcional)</label>
+              <textarea id="necesidad_principal" name="necesidad_principal" rows="3" maxlength="500"></textarea>
+            </div>
+            <div class="campo">
+              <label for="plan_interes">Plan que te interesa</label>
+              <select id="plan_interes" name="plan_interes">
+                <option value="Plan Gratuito ($0)">Gratis, $0 al mes</option>
+                <option value="Plan Pro ($3/mes)">Pro, $3 al mes</option>
+                <option value="Plan Business ($5/mes)">Business, $5 al mes</option>
+              </select>
+            </div>
+            <div class="campo campo-check">
+              <input id="terminos" name="terminos" type="checkbox" aria-describedby="error-terminos">
+              <label for="terminos">Acepto los <button type="button" class="enlace" id="abrir-terminos">términos de uso y la política de privacidad</button></label>
+              <p class="error" id="error-terminos" role="alert"></p>
+            </div>
+            <p class="error error-general" id="error-general" role="alert"></p>
+            <button class="btn btn-negro btn-grande" type="submit" id="btn-enviar">Quiero acceso a la beta</button>
+          </form>
+
+          <div class="exito" id="exito" hidden tabindex="-1">
+            <svg class="mascota" aria-hidden="true"><use href="#mascota"/></svg>
+            <h3>¡Gracias por inscribirte!</h3>
+            <p>Te contactaremos pronto para darte acceso a la beta.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="pie">
+    <div class="envoltura">
+      <p>Turnify es un proyecto en etapa beta, hecho en Bolivia.</p>
+    </div>
+  </footer>
+
+  <dialog id="terminos-dialogo" class="dialogo" aria-labelledby="terminos-titulo">
+    <h3 id="terminos-titulo">Términos y privacidad (beta)</h3>
+    <p>Usaremos tu nombre, correo y las respuestas del formulario solo para contactarte sobre la beta de Turnify y para entender qué necesitan los negocios como el tuyo.</p>
+    <p>No compartimos tus datos con terceros ni los usamos para otra cosa. Puedes pedir que los borremos escribiéndonos al correo con el que te contactemos.</p>
+    <p>Durante la beta no se hacen cobros.</p>
+    <button class="btn btn-negro" type="button" id="cerrar-terminos">Entendido</button>
+  </dialog>
+
+  <script src="script.js"></script>
+</body>
+</html>
