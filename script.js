@@ -253,6 +253,15 @@ form.addEventListener("submit", async (e) => {
   btnEnviar.textContent = "Enviando...";
 
   try {
+    try {
+      const backendUrl = obtenerBackendUrl();
+      const planTxt = form.plan_interes.value;
+      let planId = 1;
+      if (planTxt.indexOf("Pro") !== -1) planId = 2;
+      else if (planTxt.indexOf("Business") !== -1) planId = 3;
+      await fetch(backendUrl + "/api/Subscripciones/inscribir?correoElectronico=" + encodeURIComponent(form.correo.value.trim()) + "&planId=" + planId, { method: "POST" });
+    } catch (e) { console.warn("Backend no alcanzable para autoinscribir:", e); }
+
     await insertar("registro_beta", {
       nombre: form.nombre.value.trim(),
       correo: form.correo.value.trim().toLowerCase(),
@@ -280,3 +289,119 @@ document
 document
   .getElementById("cerrar-terminos")
   .addEventListener("click", () => dialogo.close());
+
+// ============================================================
+// PUNTO 1: ACCION PUT DESDE LANDING PAGE (TAREA FINAL)
+// ============================================================
+function obtenerBackendUrl() {
+  const el = document.getElementById("url-backend");
+  return (el && el.value ? el.value.trim() : "http://localhost:5039").replace(/\/+$/, "");
+}
+
+function mostrarAlertaAtencion(mensaje, tipo) {
+  tipo = tipo || "info";
+  const alerta = document.getElementById("alerta-atencion");
+  if (!alerta) return;
+  alerta.className = "alerta-msg alerta-" + tipo;
+  alerta.textContent = mensaje;
+  alerta.hidden = false;
+}
+
+function renderFichaSuscripcion(sub, codigoHttp) {
+  const vacia = document.getElementById("ficha-vacia");
+  const datos = document.getElementById("ficha-datos");
+  if (vacia) vacia.hidden = true;
+  if (datos) datos.hidden = false;
+  document.getElementById("dato-contacto").textContent = sub.correoElectronico || sub.correo || sub.telefono || sub.identificador || "-";
+  document.getElementById("dato-plan").textContent = sub.plan || "Free";
+  const badge = document.getElementById("dato-estado");
+  const est = sub.estado || sub.estadoActual || "Desconocido";
+  badge.textContent = est;
+  badge.className = "badge-estado badge-" + est.toLowerCase();
+  const fIns = sub.fechaInscripcion ? new Date(sub.fechaInscripcion).toLocaleString("es-BO") : "-";
+  const fAten = sub.fechaAtencion ? new Date(sub.fechaAtencion).toLocaleString("es-BO") : "(Pendiente de atencion)";
+  document.getElementById("dato-fecha-ins").textContent = fIns;
+  document.getElementById("dato-fecha-aten").textContent = fAten;
+  document.getElementById("dato-http").textContent = codigoHttp;
+}
+
+const btnConsultar = document.getElementById("btn-consultar-antes");
+if (btnConsultar) {
+  btnConsultar.addEventListener("click", async function() {
+    const id = document.getElementById("identificador-atender").value.trim();
+    if (!id) {
+      mostrarAlertaAtencion("Escribe un correo o telefono para consultar.", "error");
+      return;
+    }
+    mostrarAlertaAtencion("Consultando estado en base de datos...", "info");
+    const url = obtenerBackendUrl() + "/api/Subscripciones/consultar?identificador=" + encodeURIComponent(id);
+    try {
+      const resp = await fetch(url);
+      const data = await resp.json().catch(function() { return {}; });
+      if (resp.status === 200 && data.coincidencias && data.coincidencias.length > 0) {
+        const sub = data.coincidencias[0];
+        renderFichaSuscripcion(sub, "200 OK (" + data.coincidencias.length + " coincidencia)");
+        mostrarAlertaAtencion("Inscripcion encontrada con estado '" + sub.estado + "'. Lista para ser atendida con el boton PUT.", "info");
+      } else if (resp.status === 404) {
+        mostrarAlertaAtencion("Error 404 (Not Found): No existe ninguna inscripcion registrada con '" + id + "'.", "error");
+        document.getElementById("dato-http").textContent = "404 Not Found";
+      } else if (resp.status === 409) {
+        mostrarAlertaAtencion("Error 409 (Conflict): Existen multiples coincidencias para '" + id + "'.", "error");
+        document.getElementById("dato-http").textContent = "409 Conflict";
+      } else {
+        mostrarAlertaAtencion("Respuesta del servidor (" + resp.status + "): " + (data.mensaje || "Error al consultar."), "error");
+      }
+    } catch (err) {
+      mostrarAlertaAtencion("Error de conexion con el backend (" + obtenerBackendUrl() + "). Asegurate de que el microservicio este corriendo.", "error");
+    }
+  });
+}
+
+const btnPut = document.getElementById("btn-ejecutar-put");
+if (btnPut) {
+  btnPut.addEventListener("click", async function() {
+    const id = document.getElementById("identificador-atender").value.trim();
+    if (!id) {
+      mostrarAlertaAtencion("Escribe un correo o telefono para atender.", "error");
+      return;
+    }
+    mostrarAlertaAtencion("Invocando endpoint PUT /api/Subscripciones/atender...", "info");
+    const url = obtenerBackendUrl() + "/api/Subscripciones/atender?identificador=" + encodeURIComponent(id);
+    try {
+      const resp = await fetch(url, { method: "PUT" });
+      const data = await resp.json().catch(function() { return {}; });
+      if (resp.status === 200) {
+        renderFichaSuscripcion({
+          identificador: id,
+          correo: data.correo || id,
+          telefono: data.telefono,
+          plan: data.plan,
+          estado: data.estadoActual || "Atendida",
+          fechaInscripcion: data.fechaInscripcion || new Date().toISOString(),
+          fechaAtencion: data.fechaAtencion || new Date().toISOString()
+        }, "200 OK (PUT Ejecutado)");
+        mostrarAlertaAtencion("Inscripcion Atendida con exito! Estado actualizado: " + (data.estadoAnterior || "Inscrita") + " -> " + (data.estadoActual || "Atendida") + ".", "exito");
+      } else if (resp.status === 404) {
+        mostrarAlertaAtencion("Error 404 (Not Found): No se encontro la inscripcion '" + id + "'. El metodo no afecto a ningun otro registro.", "error");
+        const datos = document.getElementById("ficha-datos");
+        if (datos) document.getElementById("dato-http").textContent = "404 Not Found";
+      } else if (resp.status === 409) {
+        mostrarAlertaAtencion("Error 409 (Conflict): " + (data.mensaje || "Existen multiples coincidencias o estado incompatible."), "error");
+        const datos = document.getElementById("ficha-datos");
+        if (datos) document.getElementById("dato-http").textContent = "409 Conflict";
+      } else {
+        mostrarAlertaAtencion("Error (" + resp.status + "): " + (data.mensaje || "No se pudo atender la inscripcion."), "error");
+      }
+    } catch (err) {
+      mostrarAlertaAtencion("Error de conexion con el backend (" + obtenerBackendUrl() + "). Asegurate de que el microservicio este corriendo.", "error");
+    }
+  });
+}
+
+const btn404 = document.getElementById("btn-probar-404");
+if (btn404) {
+  btn404.addEventListener("click", function() {
+    document.getElementById("identificador-atender").value = "inexistente.demo@turnify.com";
+    if (btnPut) btnPut.click();
+  });
+}

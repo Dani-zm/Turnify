@@ -34,6 +34,7 @@
         <a href="#beneficios">Beneficios</a>
         <a href="#demo">La app</a>
         <a href="#precios">Precios</a>
+        <a href="#atencion-inscripciones">Atender (PUT)</a>
       </nav>
       <a class="btn btn-negro btn-chico" href="#registro" data-evento="clic_cta" data-detalle="cabecera">Unirme a la beta</a>
     </div>
@@ -240,6 +241,81 @@
         </div>
       </div>
     </section>
+  
+    <!-- ATENCIÓN DE INSCRIPCIONES (PUNTO 1: LANDING PAGE PUT) -->
+    <section class="seccion seccion-atencion" id="atencion-inscripciones">
+      <div class="envoltura">
+        <div class="atencion-caja">
+          <span class="badge-tarea">Requisito Tarea Final (Punto 1: 10 pts)</span>
+          <h2>Atención de Inscripciones desde la Landing Page</h2>
+          <p class="intro">
+            Esta acción invoca el endpoint <code>PUT /api/Subscripciones/atender</code> del backend para localizar al cliente por su correo o teléfono y actualizar su estado de <strong>Inscrita</strong> a <strong>Atendida</strong>.
+          </p>
+
+          <div style="margin: 12px 0 20px 0; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 1.05rem;">
+            <label for="url-backend"><strong>URL del Backend API:</strong></label>
+            <input type="text" id="url-backend" value="http://localhost:5039" class="input-texto" style="max-width: 340px; padding: 6px 10px; font-size: 1rem;">
+            <span style="font-size: 0.95rem; color: var(--gris-3);">(Puerto del microservicio de administración)</span>
+          </div>
+
+          <div class="atencion-grid">
+            <div>
+              <div class="campo">
+                <label for="identificador-atender"><strong>Correo electrónico o teléfono del cliente:</strong></label>
+                <input type="text" id="identificador-atender" class="input-texto" placeholder="Ej: lead.demo@mitienda.com o 74012345" value="lead.demo@mitienda.com">
+                <small style="color: var(--gris-3); font-size: 1rem;">Dato único para identificar la suscripción en la tabla central.</small>
+              </div>
+
+              <div class="botones-fila">
+                <button type="button" class="btn" id="btn-consultar-antes">1. Consultar estado (Antes)</button>
+                <button type="button" class="btn btn-negro" id="btn-ejecutar-put">2. Ejecutar PUT: Atender Inscripción</button>
+                <button type="button" class="btn btn-chico" id="btn-probar-404" style="background: #fff0f0;">Probar 404 (No existe)</button>
+              </div>
+
+              <div id="alerta-atencion" class="alerta-msg" hidden></div>
+            </div>
+
+            <div>
+              <div class="tarjeta-estado">
+                <h3 style="font-size: 1.35rem; margin-bottom: 12px; border-bottom: 2px solid var(--tinta); padding-bottom: 6px;">
+                  📋 Estado en Base de Datos
+                </h3>
+                <div id="ficha-vacia" style="padding: 20px 0; color: var(--gris-3); text-align: center;">
+                  Ingresa un identificador y presiona <strong>Consultar</strong> o <strong>Ejecutar PUT</strong> para ver la suscripción antes y después.
+                </div>
+                <div id="ficha-datos" hidden>
+                  <div class="fila-dato">
+                    <span>Contacto / Identificador:</span>
+                    <strong id="dato-contacto">-</strong>
+                  </div>
+                  <div class="fila-dato">
+                    <span>Plan registrado:</span>
+                    <span id="dato-plan" style="font-weight: bold;">-</span>
+                  </div>
+                  <div class="fila-dato">
+                    <span>Estado en DB:</span>
+                    <span id="dato-estado" class="badge-estado">-</span>
+                  </div>
+                  <div class="fila-dato">
+                    <span>Fecha Inscripción:</span>
+                    <span id="dato-fecha-ins">-</span>
+                  </div>
+                  <div class="fila-dato">
+                    <span>Fecha Atención (PUT):</span>
+                    <span id="dato-fecha-aten" style="font-weight: bold;">-</span>
+                  </div>
+                  <div class="fila-dato">
+                    <span>Código HTTP recibido:</span>
+                    <code id="dato-http" style="font-weight: bold; background: #eee; padding: 2px 6px; border-radius: 4px;">-</code>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <footer class="pie">
